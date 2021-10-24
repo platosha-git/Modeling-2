@@ -18,8 +18,15 @@ void plotfUniform(const int a, const int b)
 {
     Gnuplot plot;
 
-    plot("set yrange [-0.1:1]");
-    plot("plot '-' using 1:2 with lines");
+    plot("set title 'Функция плотности равномерного распределения'");
+    
+    plot("set xlabel 'x'");
+    plot("set ylabel 'f(x)'");
+
+    plot("set grid");
+    plot("set yrange [-0.1:1.1]");
+
+    plot("plot '-' using 1:2 notitle with lines");
     
     for (float i = a - 1; i < a; i += 0.01) {
         plot(i, 0);
@@ -40,8 +47,15 @@ void plotFUniform(const int a, const int b)
 {
     Gnuplot plot;
 
+    plot("set title 'Функция равномерного распределения'");
+    
+    plot("set xlabel 'x'");
+    plot("set ylabel 'F(x)'");
+    
+    plot("set grid");
     plot("set yrange [-0.1:1.1]");
-    plot("plot '-' using 1:2 with lines");
+    
+    plot("plot '-' using 1:2 notitle with lines");
     
     for (float i = a - 1; i < a; i += 0.01) {
         plot(i, 0);
