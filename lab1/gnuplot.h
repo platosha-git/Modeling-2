@@ -19,7 +19,9 @@ class Gnuplot
 public:
 	Gnuplot() ;
 	~Gnuplot();
-	void operator ()(const string & command);
+
+	void operator ()(const string &command);
+	void operator()(const double x, const double y);
 
 protected:
 	FILE *gnuplotpipe;
@@ -35,7 +37,7 @@ Gnuplot::Gnuplot()
 	#endif
 
 	if (!gnuplotpipe) {
-		cerr << ("Gnuplot not found !");
+		cerr << ("Gnuplot not found!");
 	}
 }
 
@@ -50,9 +52,15 @@ Gnuplot::~Gnuplot()
 	#endif
 }
 
-void Gnuplot::operator()(const string & command)
+void Gnuplot::operator()(const string &command)
 {
-	fprintf(gnuplotpipe,"%s\n",command.c_str());
+	fprintf(gnuplotpipe, "%s\n", command.c_str());
+	fflush(gnuplotpipe);
+};
+
+void Gnuplot::operator()(const double x, const double y)
+{
+	fprintf(gnuplotpipe, "%f\t%f\n", x, y);
 	fflush(gnuplotpipe);
 };
 
