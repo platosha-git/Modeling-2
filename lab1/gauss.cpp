@@ -17,6 +17,11 @@ void plotfGauss(const float mu, const float sigma)
 
     plot("set title 'Функция плотности распределения Гаусса'");
     
+    string muStr = "{/Symbol m}=" + std::to_string(mu);
+    string sigmaStr = "{/Symbol s}=" + std::to_string(sigma);
+    plot("set label '" + muStr + "' at 3,1");
+    plot("set label '" + sigmaStr + "' at 3,0.9");
+    
     plot("set xlabel 'x'");
     plot("set ylabel 'f(x)'");
 
@@ -41,6 +46,11 @@ void plotFGauss(const float mu, const float sigma)
     Gnuplot plot;
 
     plot("set title 'Функция распределения Гаусса'");
+
+    string muStr = "{/Symbol m}=" + std::to_string(mu);
+    string sigmaStr = "{/Symbol s}=" + std::to_string(sigma);
+    plot("set label '" + muStr + "' at 3,0.1");
+    plot("set label '" + sigmaStr + "' at 3,0");
     
     plot("set xlabel 'x'");
     plot("set ylabel 'F(x)'");
