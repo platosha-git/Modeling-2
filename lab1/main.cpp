@@ -16,15 +16,15 @@ void inputInterval(float &a, float &b)
     cin >> b;
 }
 
-void inputParameters(float &mu, float &sigma)
+void inputParameters(float &mu, float &sigma2)
 {
     cout << "Input parameters:" << endl;
 
     cout << "mu = ";
     cin >> mu;
 
-    cout << "sigma = ";
-    cin >> sigma;
+    cout << "sigma^2 = ";
+    cin >> sigma2;
 }
 
 
@@ -38,12 +38,11 @@ int main()
     plotfUniform(a, b);
 
 //Gauss
-    /*float mu = 0, sigma = 0;
-    inputParameters(mu, sigma);
+    float mu = 0, sigma2 = 0;
+    inputParameters(mu, sigma2);
 
-    plotFGauss(mu, sigma);
-    plotfGauss(mu, sigma);   
-    */
+    plotFGauss(mu, sigma2);
+    plotfGauss(mu, sigma2);   
 
     return 0;
 }
