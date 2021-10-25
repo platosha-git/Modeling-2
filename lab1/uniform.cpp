@@ -1,7 +1,24 @@
-#include "gnuplot.h"
 #include "uniform.h"
+#include "gnuplot.h"
 
-void plotfUniform(const int a, const int b)
+void fUniform(Gnuplot *plot, const float a, const float b)
+{
+    for (float i = a - 1; i < a; i += 0.01) {
+        (*plot)(i, 0);
+    }
+
+    for (float i = a; i < b; i += 0.01) {
+        float x = i; 
+        float y = 1.0 / (b - a);
+        (*plot)(x, y);
+    }
+
+    for (float i = b; i < b + 1; i += 0.01) {
+        (*plot)(i, 0);
+    }
+}
+
+void plotfUniform(const float a, const float b)
 {
     Gnuplot plot;
 
@@ -14,23 +31,27 @@ void plotfUniform(const int a, const int b)
     plot("set yrange [-0.1:1.1]");
 
     plot("plot '-' using 1:2 notitle with lines");
-    
-    for (float i = a - 1; i < a; i += 0.01) {
-        plot(i, 0);
+
+    fUniform(&plot, a, b);
+}
+
+void FUniform(Gnuplot *plot, const float a, const float b)
+{
+    for (float x = a - 1; x < a; x += 0.01) {
+        (*plot)(x, 0);
     }
 
-    for (float i = a; i < b; i += 0.01) {
-        float x = i; 
-        float y = 1.0 / (b - a);
-        plot(x, y);
+    for (float x = a; x < b; x += 0.01) {
+        float y = (x - a) / (b - a);
+        (*plot)(x, y);
     }
 
-    for (float i = b; i < b + 1; i += 0.01) {
-        plot(i, 0);
+    for (float x = b; x < b + 1; x += 0.01) {
+        (*plot)(x, 1);
     }
 }
 
-void plotFUniform(const int a, const int b)
+void plotFUniform(const float a, const float b)
 {
     Gnuplot plot;
 
@@ -43,18 +64,6 @@ void plotFUniform(const int a, const int b)
     plot("set yrange [-0.1:1.1]");
     
     plot("plot '-' using 1:2 notitle with lines");
-    
-    for (float i = a - 1; i < a; i += 0.01) {
-        plot(i, 0);
-    }
 
-    for (float i = a; i < b; i += 0.01) {
-        float x = i; 
-        float y = (i - a) / (b - a);
-        plot(x, y);
-    }
-
-    for (float i = b; i < b + 1; i += 0.01) {
-        plot(i, 1);
-    }
+    FUniform(&plot, a, b);
 }
