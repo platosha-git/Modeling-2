@@ -56,12 +56,12 @@ void Gnuplot::operator()(const string &command)
 {
 	fprintf(gnuplotpipe, "%s\n", command.c_str());
 	fflush(gnuplotpipe);
-};
+}
 
 void Gnuplot::operator()(const double x, const double y)
 {
 	fprintf(gnuplotpipe, "%f\t%f\n", x, y);
 	fflush(gnuplotpipe);
-};
+}
 
 #endif // #ifndef _GNUPLOT_H_
