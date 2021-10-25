@@ -23,6 +23,11 @@ void plotfUniform(const float a, const float b)
     Gnuplot plot;
 
     plot("set title 'Функция плотности равномерного распределения'");
+
+    string aStr = "a=" + std::to_string(a);
+    string bStr = "b=" + std::to_string(b);
+    plot("set label '" + aStr + "' at 3.2,1");
+    plot("set label '" + bStr + "' at 3.2,0.9");
     
     plot("set xlabel 'x'");
     plot("set ylabel 'f(x)'");
@@ -56,6 +61,11 @@ void plotFUniform(const float a, const float b)
     Gnuplot plot;
 
     plot("set title 'Функция равномерного распределения'");
+
+    string aStr = "a=" + std::to_string(a);
+    string bStr = "b=" + std::to_string(b);
+    plot("set label '" + aStr + "' at 3.2,0.1");
+    plot("set label '" + bStr + "' at 3.2,0");
     
     plot("set xlabel 'x'");
     plot("set ylabel 'F(x)'");

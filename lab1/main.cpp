@@ -31,19 +31,19 @@ void inputParameters(float &mu, float &sigma)
 int main()
 {
 //Uniform
-    /*float a = 0, b = 0;
+    float a = 0, b = 0;
     inputInterval(a, b);
 
     plotFUniform(a, b);
     plotfUniform(a, b);
-*/
 
 //Gauss
-    float mu = 0, sigma = 0;
+    /*float mu = 0, sigma = 0;
     inputParameters(mu, sigma);
 
     plotFGauss(mu, sigma);
     plotfGauss(mu, sigma);   
+    */
 
     return 0;
 }
