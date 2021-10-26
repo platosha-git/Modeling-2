@@ -47,15 +47,15 @@ void Gnuplot::initF(const string ttl, const string lbl1, const string lbl2)
 	string label2 = "set label '" + lbl2 + "' at 3,0";
 	fprintf(gnuplotpipe, "%s\n", label2.c_str());
 
-    fprintf(gnuplotpipe, "set xlabel 'x'\n");
-    fprintf(gnuplotpipe, "set ylabel 'F(x)'\n");
+	fprintf(gnuplotpipe, "set xlabel 'x'\n");
+	fprintf(gnuplotpipe, "set ylabel 'F(x)'\n");
 
-    fprintf(gnuplotpipe, "set grid\n");
-    fprintf(gnuplotpipe, "set yrange [-0.1:1.1]\n");    
+	fprintf(gnuplotpipe, "set grid\n");
+	fprintf(gnuplotpipe, "set yrange [-0.1:1.1]\n");    
 
-    fprintf(gnuplotpipe, "plot '-' using 1:2 notitle with lines\n");
-    
-    fflush(gnuplotpipe);
+	fprintf(gnuplotpipe, "plot '-' using 1:2 notitle with lines\n");
+	
+	fflush(gnuplotpipe);
 }
 
 void Gnuplot::initf(const string ttl, const string lbl1, const string lbl2)
@@ -69,13 +69,13 @@ void Gnuplot::initf(const string ttl, const string lbl1, const string lbl2)
 	string label2 = "set label '" + lbl2 + "' at 3,0.9";
 	fprintf(gnuplotpipe, "%s\n", label2.c_str());
 
-    fprintf(gnuplotpipe, "set xlabel 'x'\n");
-    fprintf(gnuplotpipe, "set ylabel 'f(x)'\n");
+	fprintf(gnuplotpipe, "set xlabel 'x'\n");
+	fprintf(gnuplotpipe, "set ylabel 'f(x)'\n");
 
-    fprintf(gnuplotpipe, "set grid\n");
-    fprintf(gnuplotpipe, "set yrange [-0.1:1.1]\n");    
-    
-    fprintf(gnuplotpipe, "plot '-' using 1:2 notitle with lines\n");
-    
-    fflush(gnuplotpipe);
+	fprintf(gnuplotpipe, "set grid\n");
+	fprintf(gnuplotpipe, "set yrange [-0.1:1.1]\n");    
+	
+	fprintf(gnuplotpipe, "plot '-' using 1:2 notitle with lines\n");
+	
+	fflush(gnuplotpipe);
 }
