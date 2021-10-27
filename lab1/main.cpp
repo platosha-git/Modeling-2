@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "uniform.h"
-#include "gauss.h"
+#include "poisson.h"
 
 using namespace std;
 
@@ -16,15 +16,12 @@ void inputInterval(float &a, float &b)
 	cin >> b;
 }
 
-void inputParameters(float &mu, float &sigma2)
+void inputParameters(float &lambda)
 {
-	cout << "Input parameters:" << endl;
+	cout << "Input parameter:" << endl;
 
-	cout << "mu = ";
-	cin >> mu;
-
-	cout << "sigma^2 = ";
-	cin >> sigma2;
+	cout << "lambda = ";
+	cin >> lambda;
 }
 
 
@@ -38,11 +35,11 @@ int main()
 	plotfUniform(a, b);
 
 //Gauss
-	float mu = 0, sigma2 = 0;
-	inputParameters(mu, sigma2);
+	float lambda = 0;
+	inputParameters(lambda);
 
-	plotFGauss(mu, sigma2);
-	plotfGauss(mu, sigma2);   
+	plotFPoisson(lambda);
+	plotfPoisson(lambda);   
 
 	return 0;
 }

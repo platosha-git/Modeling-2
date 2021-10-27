@@ -21,7 +21,10 @@ public:
 	~Gnuplot();
 
 	void initF(const std::string ttl, const std::string lbl1, const std::string lbl2);
+	void initF(const std::string ttl, const std::string lbl);
+
 	void initf(const std::string ttl, const std::string lbl1, const std::string lbl2);
+	void initf(const std::string ttl, const std::string lbl);
 
 	void operator()(const string &command);
 	void operator()(const double x, const double y);
