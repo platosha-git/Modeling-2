@@ -23,13 +23,13 @@ void fUniform(Gnuplot *plot, const float a, const float b)
 		(*plot)(i, 0);
 	}
 
-	for (float i = a; i < b; i += 0.01) {
+	for (float i = a; i <= b; i += 0.01) {
 		float x = i; 
 		float y = 1.0 / (b - a);
 		(*plot)(x, y);
 	}
 
-	for (float i = b; i < b + 1; i += 0.01) {
+	for (float i = b + 0.01; i < b + 1; i += 0.01) {
 		(*plot)(i, 0);
 	}
 }

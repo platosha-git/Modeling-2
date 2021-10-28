@@ -37,7 +37,7 @@ void plotfPoisson(const float lambda)
 	string lmbdStr = "{/Symbol l}=" + std::to_string(lambda);
 
 	Gnuplot plot;
-	plot.initf("Функция распределения Пуассона", lmbdStr);
+	plot.initf("Функция плотности распределения Пуассона", lmbdStr);
 
 	fPoisson(&plot, lambda);
 }
