@@ -22,8 +22,11 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    QStandardItemModel *model;
+    QStandardItemModel *modelIn;
+    QStandardItemModel *modelOut;
 
     void initMatrix(const int numStates);
+    void initTimeTable(const int numStates);
+    void outputTimeTable(std::vector<float> time, const int numStates);
 };
 #endif // WIDGET_H
