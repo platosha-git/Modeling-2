@@ -9,13 +9,15 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    calculations.cpp \
+    gauss.cpp \
     main.cpp \
+    calculations.cpp \
     memory.cpp \
     widget.cpp
 
 HEADERS += \
     calculations.h \
+    gauss.h \
     memory.h \
     widget.h
 

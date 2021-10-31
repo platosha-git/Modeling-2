@@ -51,7 +51,7 @@ void Widget::initTimeTable(const int numStates)
     }
 }
 
-void Widget::outputTimeTable(vector<float> time, const int numStates)
+void Widget::outputTimeTable(vector<double> time, const int numStates)
 {
     for (int i = 0; i < numStates; i++) {
         QModelIndex index = modelOut->index(i, 1);
@@ -73,8 +73,11 @@ void Widget::on_calculate_clicked()
         }
     }
 
-    vector<float> time = calculateTimeSystem(Matrix, numStates);
-    outputTimeTable(time, numStates);
+    Pt pt;
+    pt = calculateTimeSystem(Matrix, numStates);
+
+    outputTimeTable(pt.Time, numStates);
+    //outputPlot(pt);
 
     freeMatrix(&Matrix, numStates);
 }

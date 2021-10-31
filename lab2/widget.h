@@ -26,7 +26,8 @@ private:
     QStandardItemModel *modelOut;
 
     void initMatrix(const int numStates);
+
     void initTimeTable(const int numStates);
-    void outputTimeTable(std::vector<float> time, const int numStates);
+    void outputTimeTable(std::vector<double> time, const int numStates);
 };
 #endif // WIDGET_H

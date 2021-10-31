@@ -1,74 +1,62 @@
 #include <iostream>
+#include <iomanip>
+#include <algorithm>
+#include <iterator>
+#include <cstring>
+#include "gauss.h"
 #include "memory.h"
 #include "calculations.h"
 
 using namespace std;
 
-const double eps = 0.00001;
+const static double eps = 1e-3;
 
-vector<float> gauss(float **a, vector<float> y, int n)
+vector<double> dp(float **system, vector<double> Pcur, int n)
 {
-    vector<float> x(n);
+    vector<double> DPcur(n, 0);
 
-    int k = 0;
-    while (k < n) {
-        float max = abs(a[k][k]);
-        int index = k;
-
-        for (int i = k + 1; i < n; i++) {
-            if (abs(a[i][k]) > max) {
-                max = abs(a[i][k]);
-                index = i;
-            }
-        }
-
+    for (int i = 0; i < n; i++) {
+        double s = 0;
         for (int j = 0; j < n; j++) {
-            float temp = a[k][j];
-            a[k][j] = a[index][j];
-            a[index][j] = temp;
+            s += Pcur[j] * system[i][j];
         }
-
-        float temp = y[k];
-        y[k] = y[index];
-        y[index] = temp;
-
-        for (int i = k; i < n; i++) {
-            double temp = a[i][k];
-            if (abs(temp) < eps) continue;
-
-            for (int j = 0; j < n; j++) {
-                a[i][j] = a[i][j] / temp;
-            }
-
-            y[i] = y[i] / temp;
-            if (i == k)  continue;
-
-            for (int j = 0; j < n; j++) {
-                a[i][j] = a[i][j] - a[k][j];
-            }
-
-            y[i] = y[i] - y[k];
-        }
-        k++;
+        DPcur[i] = s * eps;
     }
 
-    for (k = n - 1; k >= 0; k--) {
-        x[k] = y[k];
-        for (int i = 0; i < k; i++) {
-            y[i] = y[i] - a[i][k] * x[k];
-        }
-    }
-
-    return x;
+    return DPcur;
 }
 
-vector<float> calculateTimeSystem(float **matrix, const int numStates)
+vector<double> getTimeSystem(float **system, vector<double> P, const int numStates)
 {
-    vector<int> sum(numStates);
+    vector<double> Pcur(numStates, 0);
+    Pcur[0] = 1;
+
+    double curTime = 0;
+    vector<double> times(numStates, 0);
+
+    while(find(times.begin(), times.end(), 0.0) != times.end()) {
+        vector<double> DPcur = dp(system, Pcur, numStates);
+
+        for (int i = 0; i < numStates; i++) {
+            if (abs(Pcur[i] - P[i]) <= eps and
+                DPcur[i] <= eps and
+                times[i] == 0) {
+                 times[i] = curTime;
+            }
+            Pcur[i] += DPcur[i];
+        }
+        curTime += eps;
+    }
+
+    return times;
+}
+
+Pt calculateTimeSystem(float **matrix, const int numStates)
+{
+    vector<float> sumIntensity(numStates, 0);
     for (int i = 0; i < numStates; i++) {
-        sum[i] = 0;
         for (int j = 0; j < numStates; j++) {
-            sum[i] += matrix[i][j];
+            sumIntensity[i] += matrix[i][j];
         }
     }
 
@@ -78,7 +66,7 @@ vector<float> calculateTimeSystem(float **matrix, const int numStates)
     for (int i = 0; i < numStates; i++) {
         for (int j = 0; j < numStates; j++) {
             if (i == j) {
-                system[i][j] = -sum[i];
+                system[i][j] = -sumIntensity[i];
             }
             else {
                 system[i][j] = matrix[j][i];
@@ -87,20 +75,26 @@ vector<float> calculateTimeSystem(float **matrix, const int numStates)
     }
 
     //system normalization
+    float **systemNorm = nullptr;
+    allocateMatrix(&systemNorm, numStates);
+    copyMatrix(&systemNorm, system, numStates);
+
     for (int j = 0; j < numStates; j++) {
-        system[numStates - 1][j] = 1;
+        systemNorm[numStates - 1][j] = 1;
     }
     vector<float> states(numStates - 1, 0);
     states.push_back(1);
 
-    vector<float> x = gauss(system, states, numStates);
+    //system solution
+    vector<double> x = gauss(systemNorm, states, numStates);
+    freeMatrix(&systemNorm, numStates);
 
+    //time calculation
+    vector<double> times = getTimeSystem(system, x, numStates);
     freeMatrix(&system, numStates);
 
-    vector<float> time(numStates);
-    for (int i = 0; i < numStates; i++) {
-        time[i] = (1 - x[i]) / (x[i] * sum[i]);
-    }
+    Pt pt;
+    pt.P = x; pt.Time = times;
 
-    return time;
+    return pt;
 }

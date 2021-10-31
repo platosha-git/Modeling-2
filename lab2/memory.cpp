@@ -8,6 +8,15 @@ void allocateMatrix(float ***Matrix, const int size)
     }
 }
 
+void copyMatrix(float ***Matrix, float **a, const int size)
+{
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            (*Matrix)[i][j] = a[i][j];
+        }
+    }
+}
+
 void freeMatrix(float ***Matrix, const int size)
 {
     for (int i = 0; i < size; i++) {
