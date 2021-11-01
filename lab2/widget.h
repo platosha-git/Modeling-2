@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QStandardItemModel>
+#include <QVector>
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -24,10 +26,12 @@ private:
     Ui::Widget *ui;
     QStandardItemModel *modelIn;
     QStandardItemModel *modelOut;
+    QCPGraph *graphic;
 
     void initMatrix(const int numStates);
 
-    void initTimeTable(const int numStates);
-    void outputTimeTable(std::vector<double> time, const int numStates);
+    void initTimeTable();
+    void outputTimeTable(std::vector<double> p, std::vector<double> time, const int numStates);
+    void plotGraphics(std::vector<double> dP, std::vector<double> dTime, const int numStates);
 };
 #endif // WIDGET_H

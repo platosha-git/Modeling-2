@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
+    <width>1310</width>
     <height>509</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>871</width>
+     <width>1291</width>
      <height>491</height>
     </rect>
    </property>
@@ -122,9 +122,9 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>60</y>
-      <width>191</width>
-      <height>371</height>
+      <y>20</y>
+      <width>611</width>
+      <height>461</height>
      </rect>
     </property>
     <property name="layoutDirection">
@@ -140,15 +140,33 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
-       <width>171</width>
+       <y>70</y>
+       <width>181</width>
        <height>331</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCustomPlot" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>30</y>
+       <width>401</width>
+       <height>421</height>
       </rect>
      </property>
     </widget>
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

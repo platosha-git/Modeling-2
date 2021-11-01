@@ -11,7 +11,7 @@ using namespace std;
 
 const static double eps = 1e-3;
 
-vector<double> dp(float **system, vector<double> Pcur, int n)
+vector<double> dp(float **system, vector<double> Pcur, const int n)
 {
     vector<double> DPcur(n, 0);
 
@@ -24,6 +24,26 @@ vector<double> dp(float **system, vector<double> Pcur, int n)
     }
 
     return DPcur;
+}
+
+void getDeltas(vector<double> &dP, vector<double> &dTimes, float **system, const int numStates)
+{
+    vector<double> Pcur(numStates, 0);
+    Pcur[0] = 1;
+
+    double curTime = 0;
+
+    while (curTime < 1) {
+        dP.insert(dP.end(), Pcur.begin(), Pcur.end());
+        vector<double> DPcur = dp(system, Pcur, numStates);
+        for (int i = 0; i < numStates; i++) {
+            Pcur[i] += DPcur[i];
+        }
+        curTime += eps;
+
+        dTimes.push_back(curTime);
+
+    }
 }
 
 vector<double> getTimeSystem(float **system, vector<double> P, const int numStates)
@@ -91,10 +111,16 @@ Pt calculateTimeSystem(float **matrix, const int numStates)
 
     //time calculation
     vector<double> times = getTimeSystem(system, x, numStates);
+
+    //delta calculation
+    vector<double> dP, dTimes;
+    getDeltas(dP, dTimes, system, numStates);
+
     freeMatrix(&system, numStates);
 
     Pt pt;
     pt.P = x; pt.Time = times;
+    pt.dP = dP; pt.dTime = dTimes;
 
     return pt;
 }

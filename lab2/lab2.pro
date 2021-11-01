@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,12 +13,14 @@ SOURCES += \
     main.cpp \
     calculations.cpp \
     memory.cpp \
+    qcustomplot.cpp \
     widget.cpp
 
 HEADERS += \
     calculations.h \
     gauss.h \
     memory.h \
+    qcustomplot.h \
     widget.h
 
 FORMS += \
