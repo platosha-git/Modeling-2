@@ -72,11 +72,11 @@ void Widget::plotGraphics(std::vector<double> dP, std::vector<double> dTime, con
         ui->widget->graph(i)->setData(x, y);
         QString name = QStringLiteral("S %1").arg(i + 1);
         ui->widget->graph(i)->setName(name);
-        ui->widget->graph(i)->setPen(QColor(i * 100, 0, 0, 255));
+        ui->widget->graph(i)->setPen(QPen(QColor(i * 100, 0, 0, 255), 0.6, Qt::PenStyle::SolidLine));
         ui->widget->xAxis->setLabel("t");
-        ui->widget->xAxis->setRange(0, 1);
+        ui->widget->xAxis->setRange(0, 5);
         ui->widget->yAxis->setLabel("P(t)");
-        ui->widget->yAxis->setRange(0, 1);
+        ui->widget->yAxis->setRange(0, 1.1);
         ui->widget->legend->setVisible(true);
         ui->widget->replot();
     }

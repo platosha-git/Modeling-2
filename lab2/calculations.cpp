@@ -33,7 +33,7 @@ void getDeltas(vector<double> &dP, vector<double> &dTimes, float **system, const
 
     double curTime = 0;
 
-    while (curTime < 1) {
+    while (curTime < 5) {
         dP.insert(dP.end(), Pcur.begin(), Pcur.end());
         vector<double> DPcur = dp(system, Pcur, numStates);
         for (int i = 0; i < numStates; i++) {
