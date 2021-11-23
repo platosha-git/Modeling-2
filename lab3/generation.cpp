@@ -1,18 +1,37 @@
 #include "generation.h"
 
 #include <iostream>
+#include <fstream>
 #include <cmath>
 
 using namespace std;
 
-vector<int> algGenerator(const int elem, const int n)
+const string tableName = "/home/platosha/Desktop/BMSTU/7sem/Modeling-2/lab3/tableRandom.txt";
+
+vector<int> algGenerator(const int amount,
+                            const int leftBorder, const int rightBorder)
 {
+    srand(time(0));
+
     vector<int> res;
-    for (int i = 0; i < n; i++) {
-        int min = pow(10, elem - 1);
-        int max = pow(10, n) - 1;
-        int number = min + (random() % (max - min + 1));
+    for (int i = 0; i < amount; i++) {
+        int number = leftBorder + random() % rightBorder;
         res.push_back(number);
     }
+    return res;
+}
+
+vector<int> tableGenerator(const int amount,
+                            const int leftBorder, const int rightBorder)
+{
+    string line;
+    ifstream in(tableName);
+    if (in.is_open()) {
+        getline(in, line);
+        cout << line << endl;
+    }
+    in.close();
+
+    vector<int> res;
     return res;
 }
