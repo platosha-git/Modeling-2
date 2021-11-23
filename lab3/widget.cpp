@@ -38,9 +38,9 @@ void unmain()
     cout << endl;
 
     vector<int> vec4 = tableGenerator(n, 1, 9);
-    //for (int i = 0; i < vec4.size(); i++) {
-    //    cout << vec4[i] << " ";
-    //}
+    for (int i = 0; i < vec4.size(); i++) {
+        cout << vec4[i] << " ";
+    }
     cout << endl;
 }
 

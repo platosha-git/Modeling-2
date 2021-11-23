@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <cmath>
 
 using namespace std;
@@ -21,17 +22,37 @@ vector<int> algGenerator(const int amount,
     return res;
 }
 
-vector<int> tableGenerator(const int amount,
-                            const int leftBorder, const int rightBorder)
+vector<int> getTable()
 {
-    string line;
+    string line = "", number = "";
+    vector<int> table;
+
     ifstream in(tableName);
     if (in.is_open()) {
-        getline(in, line);
-        cout << line << endl;
+        while (getline(in, line)) {
+            stringstream strStream(line);
+            while (getline(strStream, number, ' ')) {
+                table.push_back(atoi(number.c_str()));
+            }
+        }
     }
     in.close();
 
+    return table;
+}
+
+vector<int> tableGenerator(const int amount,
+                            const int leftBorder, const int rightBorder)
+{
+    srand(time(0));
+
+    vector<int> table = getTable();
     vector<int> res;
+    for (int i = 0; i < amount; i++) {
+        int k = random() % 50, l = random() % 10;
+        int number = leftBorder + table[10 * k + l] % rightBorder;
+        res.push_back(number);
+    }
+
     return res;
 }
