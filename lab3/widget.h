@@ -2,6 +2,8 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QTableView>
+#include <QStandardItemModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -16,9 +18,17 @@ public:
     ~Widget();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_generate_clicked();
 
 private:
     Ui::Widget *ui;
+    QStandardItemModel *modelAlg;
+    QStandardItemModel *modelTab;
+
+    void initTable(QTableView *table);
+    void outputModel(QStandardItemModel *model,
+                     const std::vector<int> dig1,
+                     const std::vector<int> dig2,
+                     const std::vector<int> dig3);
 };
 #endif // WIDGET_H

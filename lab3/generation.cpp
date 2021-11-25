@@ -8,17 +8,24 @@
 using namespace std;
 
 const string tableName = "/home/platosha/Desktop/BMSTU/7sem/Modeling-2/lab3/tableRandom.txt";
+const int A = 73129;
+const int C = 95121;
+const int m = 100000;
 
 vector<int> algGenerator(const int amount,
-                            const int leftBorder, const int rightBorder)
+                         const int leftBorder, const int rightBorder)
 {
-    srand(time(0));
+    time_t now = time(0);
+    tm *gmtm = gmtime(&now);
+    static unsigned int seed = gmtm->tm_sec;
 
     vector<int> res;
     for (int i = 0; i < amount; i++) {
-        int number = leftBorder + random() % rightBorder;
+        seed = (seed * A + C) % m;
+        int number = leftBorder + seed % (rightBorder - leftBorder + 1);
         res.push_back(number);
     }
+
     return res;
 }
 
@@ -41,16 +48,19 @@ vector<int> getTable()
     return table;
 }
 
-vector<int> tableGenerator(const int amount,
-                            const int leftBorder, const int rightBorder)
+vector<int> tabGenerator(const int amount,
+                         const int leftBorder, const int rightBorder)
 {
-    srand(time(0));
+    time_t now = time(0);
+    tm *gmtm = gmtime(&now);
+    unsigned int sec = gmtm->tm_sec;
 
     vector<int> table = getTable();
+
     vector<int> res;
     for (int i = 0; i < amount; i++) {
-        int k = random() % 50, l = random() % 10;
-        int number = leftBorder + table[10 * k + l] % rightBorder;
+        int k = sec % 50, l = (sec + i) % 10;
+        int number = leftBorder + table[10 * k + l] % (rightBorder - leftBorder + 1);
         res.push_back(number);
     }
 
