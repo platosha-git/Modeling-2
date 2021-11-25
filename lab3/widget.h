@@ -20,12 +20,14 @@ public:
 private slots:
     void on_generate_clicked();
 
+    void on_input_clicked();
+
 private:
     Ui::Widget *ui;
     QStandardItemModel *modelAlg;
     QStandardItemModel *modelTab;
 
-    void initTable(QTableView *table);
+    void initTable(QTableView *table, const int numColumns);
     void outputModel(QStandardItemModel *model,
                      const std::vector<int> dig1,
                      const std::vector<int> dig2,

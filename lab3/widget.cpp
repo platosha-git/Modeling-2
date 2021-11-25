@@ -1,4 +1,9 @@
 #include <iostream>
+#include <algorithm>
+#include <iterator>
+#include <sstream>
+#include <string>
+#include <vector>
 
 #include "widget.h"
 #include "ui_widget.h"
@@ -20,8 +25,8 @@ Widget::Widget(QWidget *parent)
     ui->tableAlg->setModel(modelAlg);
     ui->tableTab->setModel(modelTab);
 
-    initTable(ui->tableAlg);
-    initTable(ui->tableTab);
+    initTable(ui->tableAlg, 3);
+    initTable(ui->tableTab, 3);
 }
 
 Widget::~Widget()
@@ -29,11 +34,11 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::initTable(QTableView *table)
+void Widget::initTable(QTableView *table, const int numColumns)
 {
     table->clearSpans();
 
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < numColumns; i++) {
         table->horizontalHeader()->setSectionResizeMode(i, QHeaderView::ResizeToContents);
     }
 }
@@ -65,4 +70,14 @@ void Widget::on_generate_clicked()
     vector<int> tab2 = tabGenerator(N, 10, 99);
     vector<int> tab3 = tabGenerator(N, 100, 999);
     outputModel(modelTab, tab1, tab2, tab3);
+}
+
+void Widget::on_input_clicked()
+{
+    QString userVecQStr = ui->lineUser->text();
+    string userVecStr = userVecQStr.toStdString();
+
+    vector<int> user;
+    istringstream ss(userVecStr);
+    copy(istream_iterator<int>(ss), {}, back_inserter(user));
 }
