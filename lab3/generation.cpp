@@ -66,3 +66,44 @@ vector<int> tabGenerator(const int amount,
 
     return res;
 }
+
+vector<double> frequencyTest(const std::vector<int> sequence,
+                             const int leftBorder, const int rightBorder)
+{
+    double avg = 0;
+    for (size_t i = 0; i < sequence.size(); i++) {
+        avg += sequence[i];
+    }
+    avg /= sequence.size();
+
+    double disp = 0;
+    for (size_t i = 0; i < sequence.size(); i++) {
+        disp += (sequence[i] - avg) * (sequence[i] - avg);
+    }
+    disp /= (sequence.size() - 1);
+    disp = sqrt(disp);
+
+    int count = 0;
+    for (size_t i = 0; i < sequence.size(); i++) {
+        if ((avg - disp) < sequence[i] && sequence[i] < (avg + disp)) {
+            count++;
+        }
+    }
+
+    double resActual = static_cast<float> (count) / static_cast<float> (sequence.size());
+    double resTheory = 2 * disp / (rightBorder - leftBorder);
+    vector<double> res {resActual, resTheory};
+
+    return res;
+}
+
+vector<vector<double>> criterionCheck(const std::vector<int> dig1, const std::vector<int> dig2,
+                    const std::vector<int> dig3)
+{
+    vector<vector<double>> res(3);
+    res[0] = frequencyTest(dig1, 1, 9);
+    res[1] = frequencyTest(dig2, 10, 99);
+    res[2] = frequencyTest(dig3, 100, 999);
+
+    return res;
+}

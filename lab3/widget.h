@@ -24,13 +24,18 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    QStandardItemModel *modelAlg;
-    QStandardItemModel *modelTab;
+    QStandardItemModel *modelAlgIn;
+    QStandardItemModel *modelTabIn;
+
+    QStandardItemModel *modelAlgOut;
+    QStandardItemModel *modelTabOut;
 
     void initTable(QTableView *table, const int numColumns);
-    void outputModel(QStandardItemModel *model,
+    void outputModel(QStandardItemModel *model, const int numRows,
                      const std::vector<int> dig1,
                      const std::vector<int> dig2,
                      const std::vector<int> dig3);
+    void outputModel(QStandardItemModel *model,
+                     const std::vector<double> resActual, const std::vector<double> resTheory);
 };
 #endif // WIDGET_H
