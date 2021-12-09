@@ -7,22 +7,23 @@
 class Generator
 {
 public:
-    Generator();
+    Generator(const int numMsg);
 
     void setEvenDistribution(float _a, float _b);
     double even();
 
-    void setNormalDistribution(double _mu, double _sigma);
-    double normal();
+    void setPoissonDistribution(float _lambda);
+    int poisson();
 
-    int eventTime(int total_tasks, int repeat);
-    int stepTime(int total_tasks, int repeat, double step);
+    int eventTime(int repeat = 0);
+    int iterTime(double step, int repeat = 0);
 
 private:
+    int numMessages;
     std::random_device rd;
     std::default_random_engine generator;
     float a, b;
-    double mu, sigma;
+    float lambda;
 };
 
 #endif // GENERATOR_H

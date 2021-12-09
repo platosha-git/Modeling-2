@@ -5,10 +5,11 @@
 
 using namespace std;
 
-Generator::Generator() :
+Generator::Generator(const int numMsg) :
+    numMessages(numMsg),
     generator(rd()),
     a(0), b(0),
-    mu(0), sigma(0)
+    lambda(0)
 {
 
 }
@@ -19,25 +20,23 @@ void Generator::setEvenDistribution(float _a, float _b)
     b = _b;
 }
 
-void Generator::setNormalDistribution(double _mu, double _sigma)
+void Generator::setPoissonDistribution(float _lambda)
 {
-    mu = _mu;
-    sigma = _sigma;
+    lambda = _lambda;
 }
 
 double Generator::even()
 {
-    uniform_real_distribution<double> distribution(a, b);
-    double num = distribution(generator);
-
+    uniform_real_distribution<double> dist(a, b);
+    double num = dist(generator);
     return num;
 }
 
-double Generator::normal()
+int Generator::poisson()
 {
-    mt19937 gen{rd()};
-    normal_distribution<> d{mu, sigma};
-    return d(gen);
+    poisson_distribution<int> dist(lambda);
+    int num = dist(generator);
+    return num;
 }
 
 void add_event(vector<vector<double>> &events, vector<double> event)
@@ -55,7 +54,7 @@ void add_event(vector<vector<double>> &events, vector<double> event)
     }
 }
 
-int Generator::eventTime(int total_tasks, int repeat)
+int Generator::eventTime(int repeat)
 {
     mt19937 rng(rd());
     uniform_int_distribution<int> uni(1, 100);
@@ -66,7 +65,7 @@ int Generator::eventTime(int total_tasks, int repeat)
     vector<vector<double>> events = {{even(), 'g'}};
     bool free = true, process_flag = false;
 
-    while (processed_tasks < total_tasks) {
+    while (processed_tasks < numMessages) {
         vector<double> event = events[0];
         events.erase(events.begin());
         if (event[1] == 'g') {
@@ -92,7 +91,7 @@ int Generator::eventTime(int total_tasks, int repeat)
         if (process_flag) {
             if (cur_queue_len > 0) {
                 cur_queue_len--;
-                add_event(events, {event[0] + normal(), 'p'});
+                add_event(events, {event[0] + poisson(), 'p'});
                 free = false;
             }
             else {
@@ -105,27 +104,27 @@ int Generator::eventTime(int total_tasks, int repeat)
     return max_queue_len;
 }
 
-int Generator::stepTime(int total_tasks, int repeat, double step)
+int Generator::iterTime(double step, int repeat)
 {
     mt19937 rng(rd());
     uniform_int_distribution<int> uni(1, 100);
 
     int processed_tasks = 0;
     double t_curr = step;
-    float t_gen = normal();
+    float t_gen = poisson();
 
     double t_gen_prev = 0, t_proc = 0;
     int cur_queue_len = 0, max_queue_len = 0;
     bool free = true;
 
-    while (processed_tasks < total_tasks) {
+    while (processed_tasks < numMessages) {
         if (t_curr > t_gen) {
             cur_queue_len++;
             if (cur_queue_len > max_queue_len) {
                 max_queue_len = cur_queue_len;
             }
             t_gen_prev = t_gen;
-            t_gen += normal();
+            t_gen += poisson();
         }
 
         if (t_curr > t_proc) {
@@ -142,10 +141,10 @@ int Generator::stepTime(int total_tasks, int repeat, double step)
                 }
                 cur_queue_len--;
                 if (was_free) {
-                    t_proc = t_gen_prev + normal();
+                    t_proc = t_gen_prev + poisson();
                 }
                 else {
-                    t_proc += normal();
+                    t_proc += poisson();
                 }
             }
             else {

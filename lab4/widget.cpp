@@ -17,16 +17,22 @@ Widget::~Widget()
     delete ui;
 }
 
-
 void Widget::on_pushButton_clicked()
 {
-    Generator gen;
-    gen.setEvenDistribution(1, 10);
-    gen.setNormalDistribution(4, 0.2);
+    int numMsg = ui->lineNumMsg->text().toInt();
+    Generator gen(numMsg);
 
-    int len1 = gen.eventTime(1000, 0);
-    cout << "len1 = " << len1 << endl;
+    float a = ui->lineA->text().toFloat();
+    float b = ui->lineB->text().toFloat();
+    gen.setEvenDistribution(a, b);
 
-    int len2 = gen.stepTime(1000, 0, 0.01);
-    cout << "len2 = " << len2 << endl;
+    float lambda = ui->lineLambda->text().toFloat();
+    gen.setPoissonDistribution(lambda);
+
+    int lenEvent = gen.eventTime();
+    ui->lineEvent->setText(QString::number(lenEvent));
+
+    double step = ui->lineStep->text().toDouble();
+    int lenIteration = gen.iterTime(step);
+    ui->lineIteration->setText(QString::number(lenIteration));
 }
