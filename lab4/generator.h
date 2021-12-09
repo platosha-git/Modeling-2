@@ -4,6 +4,12 @@
 #include <iostream>
 #include <random>
 
+struct Message
+{
+    char desc;
+    double data;
+};
+
 class Generator
 {
 public:

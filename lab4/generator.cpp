@@ -39,18 +39,21 @@ int Generator::poisson()
     return num;
 }
 
-void addMessage(vector<vector<double>> &queue, vector<double> event)
+void addMessage(vector<Message> &queue, const char desc, const double data)
 {
     size_t i = 0;
-    while (i < queue.size() && queue[i][0] < event[0]) {
+    while (i < queue.size() && queue[i].data < data) {
         i++;
     }
 
+    Message addMsg;
+    addMsg.desc = desc; addMsg.data = data;
+
     if (0 < i  && i < queue.size()) {
-        queue.insert(queue.begin() + i - 1, event);
+        queue.insert(queue.begin() + i - 1, addMsg);
     }
     else {
-        queue.insert(queue.begin() + i, event);
+        queue.insert(queue.begin() + i, addMsg);
     }
 }
 
@@ -61,27 +64,29 @@ int Generator::eventTime()
 
     int processedMsg = 0;
     int curLen = 0, maxLen = 0;
-
-    vector<vector<double>> queue = {{even(), 'g'}};
     bool waiting = true, processing = false;
 
+    Message msg;
+    msg.desc = 'g'; msg.data = even();
+    vector<Message> queue = {msg};
+
     while (processedMsg < numMessages) {
-        vector<double> event = queue[0];
+        Message msg = queue[0];
         queue.erase(queue.begin());
 
-        if (event[1] == 'g') {
+        if (msg.desc == 'g') {
             curLen++;
             if (curLen > maxLen) {
                 maxLen = curLen;
             }
 
-            addMessage(queue, {event[0] + even(), 'g'});
+            addMessage(queue, 'g', msg.data + even());
             if (waiting) {
                 processing = true;
             }
         }
 
-        else if (event[1] == 'p') {
+        else if (msg.desc == 'p') {
             processedMsg++;
 
             if (uni(rng) <= perRepeat) {
@@ -93,7 +98,7 @@ int Generator::eventTime()
         if (processing) {
             if (curLen > 0) {
                 curLen--;
-                addMessage(queue, {event[0] + poisson(), 'p'});
+                addMessage(queue, 'p', msg.data + poisson());
                 waiting = false;
             }
             else {
