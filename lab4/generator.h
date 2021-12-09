@@ -7,7 +7,7 @@
 class Generator
 {
 public:
-    Generator(const int numMsg);
+    Generator(const int numMsg, const int numRepeat);
 
     void setEvenDistribution(float _a, float _b);
     double even();
@@ -15,11 +15,11 @@ public:
     void setPoissonDistribution(float _lambda);
     int poisson();
 
-    int eventTime(int repeat = 0);
-    int iterTime(double step, int repeat = 0);
+    int eventTime();
+    int iterTime(double step);
 
 private:
-    int numMessages;
+    int numMessages, perRepeat;
     std::random_device rd;
     std::default_random_engine generator;
     float a, b;

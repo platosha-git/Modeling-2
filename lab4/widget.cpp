@@ -20,7 +20,8 @@ Widget::~Widget()
 void Widget::on_pushButton_clicked()
 {
     int numMsg = ui->lineNumMsg->text().toInt();
-    Generator gen(numMsg);
+    int perRepeat = ui->lineRepeat->text().toInt();
+    Generator gen(numMsg, perRepeat);
 
     float a = ui->lineA->text().toFloat();
     float b = ui->lineB->text().toFloat();
