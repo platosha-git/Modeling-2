@@ -4,12 +4,6 @@
 #include <iostream>
 #include <random>
 
-struct Message
-{
-    char desc;
-    double data;
-};
-
 class Generator
 {
 public:
@@ -21,6 +15,7 @@ public:
     void setPoissonDistribution(float _lambda);
     int poisson();
 
+    int percentage();
     int eventTime();
     int iterTime(double step);
 
