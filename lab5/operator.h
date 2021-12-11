@@ -7,7 +7,7 @@
 class Operator
 {
 public:
-    Operator(std::vector<int> *_queue, std::default_random_engine *re);
+    Operator(std::default_random_engine *re, std::vector<int> *_queue);
 
     void setEvenDistribution(float _a, float _b);
     double even();
@@ -17,11 +17,11 @@ public:
     void updateTime(double dt);
 
 private:
+    std::default_random_engine *gnt;
     std::vector<int> *queue;
+    double endTime;
     float a, b;
     bool busy;
-    double finishTime;
-    std::default_random_engine *gnt;
 };
 
 #endif // OPERATOR_H

@@ -11,12 +11,13 @@ public:
 
     void setRnd(std::default_random_engine *re);
     void setEvenDistribution(float _a, float _b);
+
     double even();
-    bool updateTime(double dt);
+    bool produceClient(double dt);
 
 private:
     float a, b;
-    double finishTime;
+    double endTime;
     std::default_random_engine *gnt;
 };
 

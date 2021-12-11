@@ -11,66 +11,78 @@ Model::Model() :
 
     queue1 = vector<int> (0);
     queue2 = vector<int> (0);
-    Operator operator1(&queue1, &gnt), operator2(&queue1, &gnt), operator3(&queue2, &gnt);
+    Operator operator1(&gnt, &queue1), operator2(&gnt, &queue1), operator3(&gnt, &queue2);
     operator1.setEvenDistribution(15, 25);
     operator2.setEvenDistribution(30, 50);
     operator3.setEvenDistribution(20, 60);
     operators = {operator1, operator2, operator3};
 
-    Processor processor1(&queue1, &gnt), processor2(&queue2, &gnt);
-    processor1.setEvenDistribution(15, 15);
-    processor2.setEvenDistribution(30, 30);
-    processors = {processor1, processor2};
+    Computer computer1(&gnt, &queue1), computer2(&gnt, &queue2);
+    computer1.setTime(15);
+    computer2.setTime(30);
+    computers = {computer1, computer2};
 }
 
-void Model::generate(const int numRequests, double step)
+Result Model::generate(const int numClients, double step)
 {
-    int generated = 0, lost = 0, processed = 0;
-    while (generated < numRequests) {
-        bool request = generator.updateTime(step);
-        if (request) {
-            generated++;
+    int curClients = 0, numServed = 0, numRefusals = 0;
 
-            size_t i = 0;
-            for (; i < operators.size(); i++) {
-                if (!operators[i].isBusy()) {
-                    operators[i].acceptRequest();
-                    break;
-                }
-            }
-
-            if (i == operators.size()) {
-                lost++;
-            }
+    while (curClients < numClients) {
+        bool client = generator.produceClient(step);
+        if (client) {
+            curClients++;
+            numRefusals += distributeClient();
         }
 
-        for (size_t i = 0; i < operators.size(); i++) {
-            operators[i].updateTime(step);
-        }
+        updateOperators(step);
+        numServed += serveClients(step);
+    }
 
-        for (size_t i = 0; i < processors.size(); i++) {
-            int res = processors[i].updateTime(step);
-            if (res == 1) {
-                processed++;
-            }
+    while (numRefusals + numServed < numClients) {
+        updateOperators(step);
+        numServed += serveClients(step);
+    }
+
+    Result res;
+    res.Generated = curClients;
+    res.Lost = numRefusals;
+    res.Processed = numServed;
+
+    return res;
+}
+
+//
+void Model::updateOperators(const double step)
+{
+    for (size_t i = 0; i < operators.size(); i++) {
+        operators[i].updateTime(step);
+    }
+}
+
+//Обслуживание клиента компьютерами
+int Model::serveClients(const double step)
+{
+    int numProceesed = 0;
+    for (size_t i = 0; i < computers.size(); i++) {
+        numProceesed += computers[i].updateTime(step);
+    }
+
+    return numProceesed;
+}
+
+//Распределение клиента по операторам
+bool Model::distributeClient()
+{
+    size_t i = 0;
+    for (; i < operators.size(); i++) {
+        if (!operators[i].isBusy()) {
+            operators[i].acceptRequest();
+            break;
         }
     }
 
-    while (lost + processed < numRequests) {
-        for (size_t i = 0; i < operators.size(); i++) {
-            operators[i].updateTime(step);
-        }
-
-        for (size_t i = 0; i < processors.size(); i++) {
-            int res = processors[i].updateTime(step);
-            if (res == 1) {
-                processed++;
-            }
-        }
+    if (i == operators.size()) {
+        return true;
     }
-
-    cout << "generated: " << generated << endl;
-    cout << "lost: " << lost << endl;
-    cout << "processed: " << processed << endl;
-
+    return false;
 }

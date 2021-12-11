@@ -10,6 +10,9 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+
+    ui->lineNumReq->setText("300");
+    ui->lineUnitTime->setText("0.01");
 }
 
 Widget::~Widget()
@@ -21,11 +24,10 @@ void Widget::on_pushButton_clicked()
 {
     Model model;
 
+    int numRequests = ui->lineNumReq->text().toInt();
+    double unitTime = ui->lineUnitTime->text().toDouble();
+    Result res = model.generate(numRequests, unitTime);
 
-    auto start = chrono::system_clock::now();
-    model.generate(300, 0.01);
-    auto end = std::chrono::system_clock::now();
-    chrono::duration<double> elapsed_seconds = end-start;
-    double res = elapsed_seconds.count();
-    cout << res << endl;
+    ui->lineProcessed->setText(QString::number(res.Processed));
+    ui->lineLost->setText(QString::number(res.Lost));
 }

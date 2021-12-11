@@ -2,12 +2,12 @@
 
 using namespace std;
 
-Operator::Operator(vector<int> *_queue, default_random_engine *re) :
+Operator::Operator(default_random_engine *re, vector<int> *_queue) :
+    gnt(re),
     queue(_queue),
+    endTime(0),
     a(0), b(0),
-    busy(false),
-    finishTime(0),
-    gnt(re)
+    busy(false)
 {
 
 }
@@ -33,14 +33,14 @@ bool Operator::isBusy()
 void Operator::acceptRequest()
 {
     busy = true;
-    finishTime = even();
+    endTime = even();
 }
 
 void Operator::updateTime(double dt)
 {
-    finishTime -= dt;
+    endTime -= dt;
 
-    if (busy && finishTime <= 1e-5) {
+    if (busy && endTime <= 0) {
         busy = false;
         (*queue).push_back(1);
     }

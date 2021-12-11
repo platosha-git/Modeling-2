@@ -7,7 +7,7 @@ using namespace std;
 
 Generator::Generator() :
     a(0), b(0),
-    finishTime(0),
+    endTime(0),
     gnt(nullptr)
 {
 
@@ -31,12 +31,12 @@ double Generator::even()
     return num;
 }
 
-bool Generator::updateTime(double dt)
+bool Generator::produceClient(double dt)
 {
-    finishTime -= dt;
+    endTime -= dt;
 
-    if (finishTime <= 1e-5) {
-        finishTime = even();
+    if (endTime <= 0) {
+        endTime = even();
         return true;
     }
     return false;
