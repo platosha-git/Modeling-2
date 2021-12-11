@@ -97,7 +97,7 @@ int Generator::iterTime(double step)
             curLen++;
             maxLen = max(maxLen, curLen);
             prevTimeGeneration = timeGeneration;
-            timeGeneration += poisson();
+            timeGeneration += even();
         }
 
         if (curTime > timeProcessing) {
