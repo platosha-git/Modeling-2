@@ -12,9 +12,9 @@ public:
     void setEvenDistribution(float _a, float _b);
     double even();
 
-    bool isBusy();
+    bool isFree();
     void acceptRequest();
-    void updateTime(double dt);
+    void sendRequest(double dt);
 
 private:
     std::default_random_engine *gnt;

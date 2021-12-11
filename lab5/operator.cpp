@@ -25,9 +25,9 @@ double Operator::even()
     return num;
 }
 
-bool Operator::isBusy()
+bool Operator::isFree()
 {
-    return busy;
+    return !busy;
 }
 
 void Operator::acceptRequest()
@@ -36,7 +36,7 @@ void Operator::acceptRequest()
     endTime = even();
 }
 
-void Operator::updateTime(double dt)
+void Operator::sendRequest(double dt)
 {
     endTime -= dt;
 

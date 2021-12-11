@@ -11,7 +11,7 @@ public:
     Computer(std::default_random_engine *re, std::vector<int> *_queue);
 
     void setTime(const double _time);
-    bool updateTime(double dt);
+    bool serveClient(double dt);
 
 private:
     std::default_random_engine *gnt;

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>451</width>
-    <height>380</height>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>431</width>
-     <height>361</height>
+     <height>401</height>
     </rect>
    </property>
    <widget class="Line" name="line">
@@ -41,7 +41,7 @@
       <x>10</x>
       <y>210</y>
       <width>301</width>
-      <height>131</height>
+      <height>181</height>
      </rect>
     </property>
     <property name="title">
@@ -60,12 +60,12 @@
       <item>
        <widget class="QLabel" name="labelA_3">
         <property name="text">
-         <string>Processed requests:</string>
+         <string>Served clients:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineProcessed"/>
+       <widget class="QLineEdit" name="lineServed"/>
       </item>
      </layout>
     </widget>
@@ -82,12 +82,34 @@
       <item>
        <widget class="QLabel" name="labelA_4">
         <property name="text">
-         <string>Lost requests:</string>
+         <string>Refuses clients:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineLost"/>
+       <widget class="QLineEdit" name="lineRefused"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_6">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>281</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="labelA_5">
+        <property name="text">
+         <string>Refuses percentage:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="linePerRefused"/>
       </item>
      </layout>
     </widget>
@@ -118,12 +140,12 @@
      <item>
       <widget class="QLabel" name="labelA_7">
        <property name="text">
-        <string>Number of requests:</string>
+        <string>Number of clients:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineNumReq"/>
+      <widget class="QLineEdit" name="lineNumClients"/>
      </item>
     </layout>
    </widget>

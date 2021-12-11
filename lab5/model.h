@@ -7,9 +7,9 @@
 
 struct Result
 {
-    int Generated;
-    int Lost;
-    int Processed;
+    int Service;
+    int Refusals;
+    int PerRefusals;
 };
 
 class Model
@@ -19,7 +19,7 @@ public:
     Result generate(const int numRequests, double step);
 
 private:
-    std::vector<int> queue1, queue2;
+    std::vector<int> storage1, storage2;
     Generator generator;
     std::vector<Operator> operators;
     std::vector<Computer> computers;
@@ -29,7 +29,7 @@ private:
 
     bool distributeClient();
     int serveClients(const double step);
-    void updateOperators(const double step);
+    void storageTransfer(const double step);
 };
 
 #endif // MODEL_H

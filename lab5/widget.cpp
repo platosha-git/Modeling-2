@@ -11,7 +11,7 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->lineNumReq->setText("300");
+    ui->lineNumClients->setText("300");
     ui->lineUnitTime->setText("0.01");
 }
 
@@ -24,10 +24,11 @@ void Widget::on_pushButton_clicked()
 {
     Model model;
 
-    int numRequests = ui->lineNumReq->text().toInt();
+    int numClients = ui->lineNumClients->text().toInt();
     double unitTime = ui->lineUnitTime->text().toDouble();
-    Result res = model.generate(numRequests, unitTime);
+    Result res = model.generate(numClients, unitTime);
 
-    ui->lineProcessed->setText(QString::number(res.Processed));
-    ui->lineLost->setText(QString::number(res.Lost));
+    ui->lineServed->setText(QString::number(res.Service));
+    ui->lineRefused->setText(QString::number(res.Refusals));
+    ui->linePerRefused->setText(QString::number(res.PerRefusals));
 }

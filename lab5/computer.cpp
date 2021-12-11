@@ -16,7 +16,7 @@ void Computer::setTime(const double _time)
     time = _time;
 }
 
-bool Computer::updateTime(double dt)
+bool Computer::serveClient(double dt)
 {
     endTime -= dt;
 

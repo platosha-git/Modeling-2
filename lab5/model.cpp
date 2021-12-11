@@ -9,15 +9,15 @@ Model::Model() :
     generator.setEvenDistribution(8, 12);
     generator.setRnd(&gnt);
 
-    queue1 = vector<int> (0);
-    queue2 = vector<int> (0);
-    Operator operator1(&gnt, &queue1), operator2(&gnt, &queue1), operator3(&gnt, &queue2);
+    storage1 = vector<int> (0);
+    storage2 = vector<int> (0);
+    Operator operator1(&gnt, &storage1), operator2(&gnt, &storage1), operator3(&gnt, &storage2);
     operator1.setEvenDistribution(15, 25);
     operator2.setEvenDistribution(30, 50);
     operator3.setEvenDistribution(20, 60);
     operators = {operator1, operator2, operator3};
 
-    Computer computer1(&gnt, &queue1), computer2(&gnt, &queue2);
+    Computer computer1(&gnt, &storage1), computer2(&gnt, &storage2);
     computer1.setTime(15);
     computer2.setTime(30);
     computers = {computer1, computer2};
@@ -34,40 +34,21 @@ Result Model::generate(const int numClients, double step)
             numRefusals += distributeClient();
         }
 
-        updateOperators(step);
+        storageTransfer(step);
         numServed += serveClients(step);
     }
 
     while (numRefusals + numServed < numClients) {
-        updateOperators(step);
+        storageTransfer(step);
         numServed += serveClients(step);
     }
 
     Result res;
-    res.Generated = curClients;
-    res.Lost = numRefusals;
-    res.Processed = numServed;
+    res.Service = numServed;
+    res.Refusals = numRefusals;
+    res.PerRefusals = (numServed) ? numRefusals * 100 / numServed : 0;
 
     return res;
-}
-
-//
-void Model::updateOperators(const double step)
-{
-    for (size_t i = 0; i < operators.size(); i++) {
-        operators[i].updateTime(step);
-    }
-}
-
-//Обслуживание клиента компьютерами
-int Model::serveClients(const double step)
-{
-    int numProceesed = 0;
-    for (size_t i = 0; i < computers.size(); i++) {
-        numProceesed += computers[i].updateTime(step);
-    }
-
-    return numProceesed;
 }
 
 //Распределение клиента по операторам
@@ -75,7 +56,7 @@ bool Model::distributeClient()
 {
     size_t i = 0;
     for (; i < operators.size(); i++) {
-        if (!operators[i].isBusy()) {
+        if (operators[i].isFree()) {
             operators[i].acceptRequest();
             break;
         }
@@ -85,4 +66,23 @@ bool Model::distributeClient()
         return true;
     }
     return false;
+}
+
+//Отправка клиента в накопитель
+void Model::storageTransfer(const double step)
+{
+    for (size_t i = 0; i < operators.size(); i++) {
+        operators[i].sendRequest(step);
+    }
+}
+
+//Обслуживание клиента компьютерами
+int Model::serveClients(const double step)
+{
+    int numProceesed = 0;
+    for (size_t i = 0; i < computers.size(); i++) {
+        numProceesed += computers[i].serveClient(step);
+    }
+
+    return numProceesed;
 }
