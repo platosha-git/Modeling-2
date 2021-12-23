@@ -32,8 +32,8 @@ Model::Model() :
 
 Result Model::generate(const int numTourists, double step)
 {
-    int curTourists = 0, notFailed = 0, processed = 0,
-            failed = numTourists;
+    int curTourists = 0, procTourists = 0;
+    int fullTransf = 0, halfTransf = numTourists;
 
     while (curTourists < numTourists) {
         bool tourist = generator.produceTourist(step);
@@ -42,27 +42,22 @@ Result Model::generate(const int numTourists, double step)
         }
 
         int lowTransferred = lowTransfer(step);
-        notFailed += lowTransferred;
-        failed -= lowTransferred;
-        processed += highTransfer(step);
+        fullTransf += lowTransferred;
+        halfTransf -= lowTransferred;
+        procTourists += highTransfer(step);
     }
 
-    while (processed < notFailed) {
+    while (procTourists < fullTransf) {
         int lowTransferred = lowTransfer(step);
-        notFailed += lowTransferred;
-        failed -= lowTransferred;
-        processed += highTransfer(step);
+        fullTransf += lowTransferred;
+        halfTransf -= lowTransferred;
+        procTourists += highTransfer(step);
     }
-
-    cout << "Generated = " << curTourists << endl;
-    cout << "Not Failed = " << notFailed << endl;
-    cout << "Failed = " << failed << endl;
-    cout << "Processed = " << processed << endl;
 
     Result res;
-    res.Service = curTourists;
-    res.Refusals = failed;
-    res.PerRefusals = (processed) ? failed * 100 / processed : 0;
+    res.FTransf = fullTransf;
+    res.HTransf = halfTransf;
+    res.LMaxLen = getLowMaxLen();
 
     return res;
 }

@@ -22,7 +22,7 @@ private:
     float a, b;
     bool busy;
 
-    void addToQueue(const int human);
+    void queueTourist();
 };
 
 #endif // OPERATOR_H

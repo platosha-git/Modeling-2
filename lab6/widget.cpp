@@ -28,7 +28,6 @@ void Widget::on_pushButton_clicked()
     double unitTime = ui->lineUnitTime->text().toDouble();
     Result res = model.generate(numClients, unitTime);
 
-    ui->lineServed->setText(QString::number(res.Service));
-    ui->lineRefused->setText(QString::number(res.Refusals));
-    ui->linePerRefused->setText(QString::number(res.PerRefusals));
+    ui->lineFullTransf->setText(QString::number(res.FTransf));
+    ui->lineHalfTransf->setText(QString::number(res.HTransf));
 }

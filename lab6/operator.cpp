@@ -30,34 +30,35 @@ double Operator::even()
 bool Operator::liftTourist(double step)
 {
     timer -= step;
-    if (queue->size() > maxQueueLen) {
-        maxQueueLen = queue->size();
+
+    int curLen = queue->size();
+    if (curLen > maxQueueLen) {
+        maxQueueLen = curLen;
     }
 
-    if (!busy && queue->size() != 0) {
+    if (!busy && curLen != 0) {
         busy = true;
         timer = even();
     }
 
     if (busy && timer <= 0) {
-        if (random() % 100 < 70) {
-            int human = (*queue)[0];
-            (*queue).erase((*queue).begin());
-            addToQueue(human);
-            busy = false;
-            return true;
-        }
-        else {
+        if (random() % 100 <= 40) {
             (*queue).erase((*queue).begin());
             busy = false;
             return false;
+        }
+        else {
+            (*queue).erase((*queue).begin());
+            queueTourist();
+            busy = false;
+            return true;
         }
     }
 
     return false;
 }
 
-void Operator::addToQueue(const int human)
+void Operator::queueTourist()
 {
     size_t minLen = (*queueGroup)[0].size();
     int minIdx = 0;
@@ -68,6 +69,5 @@ void Operator::addToQueue(const int human)
             minIdx = i;
         }
     }
-
-    (*queueGroup)[minIdx].push_back(human);
+    (*queueGroup)[minIdx].push_back(1);
 }

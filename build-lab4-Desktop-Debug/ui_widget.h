@@ -30,11 +30,11 @@ public:
     QWidget *horizontalLayoutWidget_4;
     QHBoxLayout *horizontalLayout_4;
     QLabel *labelA_3;
-    QLineEdit *lineServed;
+    QLineEdit *lineFullTransf;
     QWidget *horizontalLayoutWidget_5;
     QHBoxLayout *horizontalLayout_5;
     QLabel *labelA_4;
-    QLineEdit *lineRefused;
+    QLineEdit *lineHalfTransf;
     QWidget *horizontalLayoutWidget_6;
     QHBoxLayout *horizontalLayout_6;
     QLabel *labelA_5;
@@ -77,10 +77,10 @@ public:
 
         horizontalLayout_4->addWidget(labelA_3);
 
-        lineServed = new QLineEdit(horizontalLayoutWidget_4);
-        lineServed->setObjectName(QString::fromUtf8("lineServed"));
+        lineFullTransf = new QLineEdit(horizontalLayoutWidget_4);
+        lineFullTransf->setObjectName(QString::fromUtf8("lineFullTransf"));
 
-        horizontalLayout_4->addWidget(lineServed);
+        horizontalLayout_4->addWidget(lineFullTransf);
 
         horizontalLayoutWidget_5 = new QWidget(groupBox_3);
         horizontalLayoutWidget_5->setObjectName(QString::fromUtf8("horizontalLayoutWidget_5"));
@@ -93,10 +93,10 @@ public:
 
         horizontalLayout_5->addWidget(labelA_4);
 
-        lineRefused = new QLineEdit(horizontalLayoutWidget_5);
-        lineRefused->setObjectName(QString::fromUtf8("lineRefused"));
+        lineHalfTransf = new QLineEdit(horizontalLayoutWidget_5);
+        lineHalfTransf->setObjectName(QString::fromUtf8("lineHalfTransf"));
 
-        horizontalLayout_5->addWidget(lineRefused);
+        horizontalLayout_5->addWidget(lineHalfTransf);
 
         horizontalLayoutWidget_6 = new QWidget(groupBox_3);
         horizontalLayoutWidget_6->setObjectName(QString::fromUtf8("horizontalLayoutWidget_6"));
@@ -164,10 +164,10 @@ public:
     {
         Widget->setWindowTitle(QApplication::translate("Widget", "Widget", nullptr));
         groupBox_3->setTitle(QApplication::translate("Widget", "Results", nullptr));
-        labelA_3->setText(QApplication::translate("Widget", "Served clients:", nullptr));
-        labelA_4->setText(QApplication::translate("Widget", "Refuses clients:", nullptr));
+        labelA_3->setText(QApplication::translate("Widget", "Full transferred clients:", nullptr));
+        labelA_4->setText(QApplication::translate("Widget", "Half transferred clients:", nullptr));
         labelA_5->setText(QApplication::translate("Widget", "Refuses percentage:", nullptr));
-        labelA_7->setText(QApplication::translate("Widget", "Number of clients:", nullptr));
+        labelA_7->setText(QApplication::translate("Widget", "Number of tourists:", nullptr));
         pushButton->setText(QApplication::translate("Widget", "Generate", nullptr));
         labelA_8->setText(QApplication::translate("Widget", "Unit of time:", nullptr));
     } // retranslateUi

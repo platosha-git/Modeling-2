@@ -7,9 +7,10 @@
 
 struct Result
 {
-    int Service;
-    int Refusals;
-    int PerRefusals;
+    int FTransf;
+    int HTransf;
+    std::vector<int> LMaxLen;
+    std::vector<int> HMaxLen;
 };
 
 class Model
