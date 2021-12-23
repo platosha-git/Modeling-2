@@ -10,11 +10,11 @@ public:
     Generator();
 
     void setRnd(std::default_random_engine *re);
-    void setEvenDistribution(float _a, float _b);
-    void setQueue(std::vector<std::vector<int>> *_queue);
+    void setEvenDistribution(const float _a, const float _b);
+    void setSection(std::vector<std::vector<int>> *_queue);
 
     double even();
-    bool produceClient(double dt);
+    bool produceTourist(double dt);
     void addClientToQueue();
 
 private:

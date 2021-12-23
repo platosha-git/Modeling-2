@@ -26,7 +26,7 @@ void Generator::setEvenDistribution(float _a, float _b)
     b = _b;
 }
 
-void Generator::setQueue(vector<vector<int>> *_queue)
+void Generator::setSection(vector<vector<int>> *_queue)
 {
     human = -1;
     queue = _queue;
@@ -39,7 +39,7 @@ double Generator::even()
     return num;
 }
 
-bool Generator::produceClient(double dt)
+bool Generator::produceTourist(double dt)
 {
     timer -= dt;
 

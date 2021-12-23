@@ -5,15 +5,24 @@ using namespace std;
 Computer::Computer(default_random_engine *re, vector<int> *_queue) :
     gnt(re),
     queue(_queue), maxLen(0),
-    time(0), timer(0),
+    timer(0),
+    a(0), b(0),
     busy(false)
 {
 
 }
 
-void Computer::setTime(const double _time)
+void Computer::setEvenDistribution(const float _a, const float _b)
 {
-    time = _time;
+    a = _a;
+    b = _b;
+}
+
+double Computer::even()
+{
+    uniform_real_distribution<double> dist(a, b);
+    double num = dist(*gnt);
+    return num;
 }
 
 bool Computer::serveClient(double dt)
@@ -31,7 +40,7 @@ bool Computer::serveClient(double dt)
 
     if (!busy && (*queue).size() != 0) {
         (*queue).erase((*queue).begin());
-        timer = time;
+        timer = even();
         busy = true;
         return false;
     }

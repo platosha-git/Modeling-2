@@ -10,14 +10,16 @@ class Computer
 public:
     Computer(std::default_random_engine *re, std::vector<int> *_queue);
 
-    void setTime(const double _time);
+    void setEvenDistribution(const float _a, const float _b);
+    double even();
     bool serveClient(double dt);
 
 private:
     std::default_random_engine *gnt;
     std::vector<int> *queue;
     int maxLen = 0;
-    double time, timer;
+    double timer;
+    float a, b;
     bool busy;
 };
 

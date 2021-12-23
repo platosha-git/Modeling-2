@@ -6,49 +6,51 @@ using namespace std;
 Model::Model() :
     gnt(rd())
 {
-    storage1 = {{}, {}, {}};
-    storage2 = {{}, {}};
+    section1 = vector<vector<int>>(3, vector<int>());
+    section2 = vector<vector<int>>(2, vector<int>());
 
-    generator.setEvenDistribution(1, 9);
+    generator.setEvenDistribution(25, 35);
     generator.setRnd(&gnt);
-    generator.setQueue(&storage1);
+    generator.setSection(&section1);
 
-    Operator operator1(&gnt, &storage1[0], &storage2),
-             operator2(&gnt, &storage1[1], &storage2),
-             operator3(&gnt, &storage1[2], &storage2);
+    Operator lowLift1(&gnt, &section1[0], &section2),
+             lowLift2(&gnt, &section1[1], &section2),
+             lowLift3(&gnt, &section1[2], &section2);
 
-    operator1.setEvenDistribution(10, 20);
-    operator2.setEvenDistribution(13, 19);
-    operator3.setEvenDistribution(9, 17);
-    operators = {operator1, operator2, operator3};
+    lowLift1.setEvenDistribution(100, 140);
+    lowLift2.setEvenDistribution(120, 180);
+    lowLift3.setEvenDistribution(90, 110);
+    lowLifts = {lowLift1, lowLift2, lowLift3};
 
-    Computer computer1(&gnt, &storage2[0]), computer2(&gnt, &storage2[1]);
-    computer1.setTime(5);
-    computer2.setTime(50);
-    computers = {computer1, computer2};
+    Computer highLift1(&gnt, &section2[0]),
+             highLift2(&gnt, &section2[1]);
+
+    highLift1.setEvenDistribution(155, 185);
+    highLift2.setEvenDistribution(150, 170);
+    highLifts = {highLift1, highLift2};
 }
 
-Result Model::generate(const int numClients, double step)
+Result Model::generate(const int numTourists, double step)
 {
     int notFailed = 0, generated = 0, processed = 0,
-            failed = numClients;
+            failed = numTourists;
 
-    while (generated < numClients) {
-        bool client = generator.produceClient(step);
-        if (client) {
+    while (generated < numTourists) {
+        bool tourist = generator.produceTourist(step);
+        if (tourist) {
             generated++;
         }
 
-        for (size_t i = 0; i < operators.size(); i++) {
-            bool res = operators[i].processExam(step);
+        for (size_t i = 0; i < lowLifts.size(); i++) {
+            bool res = lowLifts[i].processExam(step);
             if (res) {
                 notFailed++;
                 failed--;
             }
         }
 
-        for (size_t i = 0; i < computers.size(); i++) {
-            bool res = computers[i].serveClient(step);
+        for (size_t i = 0; i < highLifts.size(); i++) {
+            bool res = highLifts[i].serveClient(step);
             if (res == 1) {
                 processed++;
             }
@@ -56,16 +58,16 @@ Result Model::generate(const int numClients, double step)
     }
 
     while (processed < notFailed) {
-        for (size_t i = 0; i < operators.size(); i++) {
-            bool res = operators[i].processExam(step);
+        for (size_t i = 0; i < lowLifts.size(); i++) {
+            bool res = lowLifts[i].processExam(step);
             if (res) {
                 notFailed++;
                 failed--;
             }
         }
 
-        for (size_t i = 0; i < computers.size(); i++) {
-            bool res = computers[i].serveClient(step);
+        for (size_t i = 0; i < highLifts.size(); i++) {
+            bool res = highLifts[i].serveClient(step);
             if (!res) {
                 processed++;
             }

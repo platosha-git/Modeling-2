@@ -16,13 +16,13 @@ class Model
 {
 public:
     Model();
-    Result generate(const int numRequests, double step);
+    Result generate(const int numTourists, double step);
 
 private:
-    std::vector<std::vector<int>> storage1, storage2;
     Generator generator;
-    std::vector<Operator> operators;
-    std::vector<Computer> computers;
+    std::vector<Operator> lowLifts;
+    std::vector<Computer> highLifts;
+    std::vector<std::vector<int>> section1, section2;
 
     std::random_device rd;
     std::default_random_engine gnt;
