@@ -38,20 +38,20 @@ Result Model::generate(const int numClients, double step)
         if (client) {
             generated++;
         }
-    }
 
-    for (size_t i = 0; i < operators.size(); i++) {
-        bool res = operators[i].processExam(step);
-        if (res) {
-            notFailed++;
-            failed--;
+        for (size_t i = 0; i < operators.size(); i++) {
+            bool res = operators[i].processExam(step);
+            if (res) {
+                notFailed++;
+                failed--;
+            }
         }
-    }
 
-    for (size_t i = 0; i < computers.size(); i++) {
-        bool res = computers[i].serveClient(step);
-        if (!res) {
-            processed++;
+        for (size_t i = 0; i < computers.size(); i++) {
+            bool res = computers[i].serveClient(step);
+            if (res == 1) {
+                processed++;
+            }
         }
     }
 
@@ -72,8 +72,13 @@ Result Model::generate(const int numClients, double step)
         }
     }
 
+    cout << "Generated = " << generated << endl;
+    cout << "Not Failed = " << notFailed << endl;
+    cout << "Failed = " << failed << endl;
+    cout << "Processed = " << processed << endl;
+
     Result res;
-    res.Service = processed;
+    res.Service = generated;
     res.Refusals = failed;
     res.PerRefusals = (processed) ? failed * 100 / processed : 0;
 
