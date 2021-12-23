@@ -32,13 +32,13 @@ Model::Model() :
 
 Result Model::generate(const int numTourists, double step)
 {
-    int notFailed = 0, generated = 0, processed = 0,
+    int curTourists = 0, notFailed = 0, processed = 0,
             failed = numTourists;
 
-    while (generated < numTourists) {
+    while (curTourists < numTourists) {
         bool tourist = generator.produceTourist(step);
         if (tourist) {
-            generated++;
+            curTourists++;
         }
 
         for (size_t i = 0; i < lowLifts.size(); i++) {
@@ -48,13 +48,7 @@ Result Model::generate(const int numTourists, double step)
                 failed--;
             }
         }
-
-        for (size_t i = 0; i < highLifts.size(); i++) {
-            bool res = highLifts[i].serveClient(step);
-            if (res == 1) {
-                processed++;
-            }
-        }
+        processed += highTransfer(step);
     }
 
     while (processed < notFailed) {
@@ -65,24 +59,27 @@ Result Model::generate(const int numTourists, double step)
                 failed--;
             }
         }
-
-        for (size_t i = 0; i < highLifts.size(); i++) {
-            bool res = highLifts[i].serveClient(step);
-            if (!res) {
-                processed++;
-            }
-        }
+        processed += highTransfer(step);
     }
 
-    cout << "Generated = " << generated << endl;
+    cout << "Generated = " << curTourists << endl;
     cout << "Not Failed = " << notFailed << endl;
     cout << "Failed = " << failed << endl;
     cout << "Processed = " << processed << endl;
 
     Result res;
-    res.Service = generated;
+    res.Service = curTourists;
     res.Refusals = failed;
     res.PerRefusals = (processed) ? failed * 100 / processed : 0;
 
     return res;
+}
+
+int Model::highTransfer(const double step)
+{
+    int numTransferred = 0;
+    for (size_t i = 0; i < highLifts.size(); i++) {
+        numTransferred += highLifts[i].serveClient(step);
+    }
+    return numTransferred;
 }

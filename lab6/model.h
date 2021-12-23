@@ -28,7 +28,7 @@ private:
     std::default_random_engine gnt;
 
     bool distributeClient();
-    int serveClients(const double step);
+    int highTransfer(const double step);
     void storageTransfer(const double step);
 };
 

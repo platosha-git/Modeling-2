@@ -42,6 +42,7 @@ bool Operator::processExam(double step)
     if (busy && timer <= 0) {
         if (random() % 100 < 70) {
             int human = (*queue)[0];
+            (*queue).erase((*queue).begin());
             addToQueue(human);
             busy = false;
             return true;
