@@ -12,8 +12,7 @@ public:
 
     void setEvenDistribution(float _a, float _b);
     double even();
-
-    bool processExam(double step);
+    bool liftTourist(double step);
 
 private:
     std::default_random_engine *gnt;

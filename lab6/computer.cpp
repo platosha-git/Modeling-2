@@ -25,12 +25,13 @@ double Computer::even()
     return num;
 }
 
-bool Computer::serveClient(double dt)
+bool Computer::liftTourist(double dt)
 {
     timer -= dt;
 
-    if (queue->size() > maxLen) {
-        maxLen = queue->size();
+    int curLen = queue->size();
+    if (curLen > maxLen) {
+        maxLen = curLen;
     }
 
     if (busy && timer <= 0) {
@@ -38,7 +39,7 @@ bool Computer::serveClient(double dt)
         return true;
     }
 
-    if (!busy && (*queue).size() != 0) {
+    if (!busy && curLen != 0) {
         (*queue).erase((*queue).begin());
         timer = even();
         busy = true;

@@ -27,7 +27,7 @@ double Operator::even()
     return num;
 }
 
-bool Operator::processExam(double step)
+bool Operator::liftTourist(double step)
 {
     timer -= step;
     if (queue->size() > maxQueueLen) {

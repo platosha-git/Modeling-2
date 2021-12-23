@@ -1,7 +1,6 @@
 #ifndef COMPUTER_H
 #define COMPUTER_H
 
-
 #include <iostream>
 #include <random>
 
@@ -12,7 +11,7 @@ public:
 
     void setEvenDistribution(const float _a, const float _b);
     double even();
-    bool serveClient(double dt);
+    bool liftTourist(double dt);
 
 private:
     std::default_random_engine *gnt;

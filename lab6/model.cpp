@@ -41,24 +41,16 @@ Result Model::generate(const int numTourists, double step)
             curTourists++;
         }
 
-        for (size_t i = 0; i < lowLifts.size(); i++) {
-            bool res = lowLifts[i].processExam(step);
-            if (res) {
-                notFailed++;
-                failed--;
-            }
-        }
+        int lowTransferred = lowTransfer(step);
+        notFailed += lowTransferred;
+        failed -= lowTransferred;
         processed += highTransfer(step);
     }
 
     while (processed < notFailed) {
-        for (size_t i = 0; i < lowLifts.size(); i++) {
-            bool res = lowLifts[i].processExam(step);
-            if (res) {
-                notFailed++;
-                failed--;
-            }
-        }
+        int lowTransferred = lowTransfer(step);
+        notFailed += lowTransferred;
+        failed -= lowTransferred;
         processed += highTransfer(step);
     }
 
@@ -75,11 +67,20 @@ Result Model::generate(const int numTourists, double step)
     return res;
 }
 
+int Model::lowTransfer(const double step)
+{
+    int numTransferred = 0;
+    for (size_t i = 0; i < lowLifts.size(); i++) {
+        numTransferred += lowLifts[i].liftTourist(step);
+    }
+    return numTransferred;
+}
+
 int Model::highTransfer(const double step)
 {
     int numTransferred = 0;
     for (size_t i = 0; i < highLifts.size(); i++) {
-        numTransferred += highLifts[i].serveClient(step);
+        numTransferred += highLifts[i].liftTourist(step);
     }
     return numTransferred;
 }
