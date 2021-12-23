@@ -11,18 +11,18 @@ public:
 
     void setRnd(std::default_random_engine *re);
     void setEvenDistribution(const float _a, const float _b);
-    void setSection(std::vector<std::vector<int>> *_queue);
+    void setSection(std::vector<std::vector<int>> *_section);
 
     double even();
     bool produceTourist(double dt);
-    void addClientToQueue();
 
 private:
     float a, b;
     double timer;
-    int human;
-    std::vector<std::vector<int>> *queue;
+    std::vector<std::vector<int>> *section;
     std::default_random_engine *gnt;
+
+    void queueTourist();
 };
 
 #endif // GENERATOR_H

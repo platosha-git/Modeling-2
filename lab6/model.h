@@ -29,7 +29,6 @@ private:
 
     int lowTransfer(const double step);
     int highTransfer(const double step);
-    void storageTransfer(const double step);
 };
 
 #endif // MODEL_H

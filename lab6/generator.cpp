@@ -8,8 +8,7 @@ using namespace std;
 Generator::Generator() :
     a(0), b(0),
     timer(0),
-    human(-1),
-    queue(nullptr),
+    section(nullptr),
     gnt(nullptr)
 {
 
@@ -26,10 +25,9 @@ void Generator::setEvenDistribution(float _a, float _b)
     b = _b;
 }
 
-void Generator::setSection(vector<vector<int>> *_queue)
+void Generator::setSection(vector<vector<int>> *_section)
 {
-    human = -1;
-    queue = _queue;
+    section = _section;
 }
 
 double Generator::even()
@@ -45,24 +43,22 @@ bool Generator::produceTourist(double dt)
 
     if (timer <= 0) {
         timer = even();
-        addClientToQueue();
+        queueTourist();
         return true;
     }
     return false;
 }
 
-void Generator::addClientToQueue()
+void Generator::queueTourist()
 {
-    size_t minLen = (*queue)[0].size();
+    size_t minLen = (*section)[0].size();
     int minIdx = 0;
 
-    for (size_t i = 1; i < queue->size(); i++) {
-        if ((*queue)[i].size() < minLen) {
-            minLen = (*queue)[i].size();
+    for (size_t i = 1; i < section->size(); i++) {
+        if ((*section)[i].size() < minLen) {
+            minLen = (*section)[i].size();
             minIdx = i;
         }
     }
-
-    human++;
-    (*queue)[minIdx].push_back(human);
+    (*section)[minIdx].push_back(1);
 }
