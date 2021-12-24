@@ -17,9 +17,9 @@ Model::Model() :
              lowLift2(&gnt, &section1[1], &section2),
              lowLift3(&gnt, &section1[2], &section2);
 
-    lowLift1.setEvenDistribution(100, 140);
-    lowLift2.setEvenDistribution(120, 180);
-    lowLift3.setEvenDistribution(90, 110);
+    lowLift1.setEvenDistribution(90, 130);
+    lowLift2.setEvenDistribution(110, 170);
+    lowLift3.setEvenDistribution(80, 100);
     lowLifts = {lowLift1, lowLift2, lowLift3};
 
     Computer highLift1(&gnt, &section2[0]),
