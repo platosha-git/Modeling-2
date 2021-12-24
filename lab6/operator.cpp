@@ -31,12 +31,9 @@ bool Operator::liftTourist(double step)
 {
     timer -= step;
 
-    int curLen = queue->size();
-    if (curLen > maxQueueLen) {
-        maxQueueLen = curLen;
-    }
+    updateMaxQueueLen();
 
-    if (!busy && curLen != 0) {
+    if (!busy && queue->size() != 0) {
         busy = true;
         timer = even();
     }
@@ -54,7 +51,6 @@ bool Operator::liftTourist(double step)
             return true;
         }
     }
-
     return false;
 }
 
@@ -70,4 +66,16 @@ void Operator::queueTourist()
         }
     }
     (*queueGroup)[minIdx].push_back(1);
+}
+
+void Operator::updateMaxQueueLen()
+{
+    if (static_cast<int>(queue->size()) > maxQueueLen) {
+        maxQueueLen = queue->size();
+    }
+}
+
+int Operator::getMaxQueueLen()
+{
+    return maxQueueLen;
 }

@@ -13,6 +13,7 @@ public:
     void setEvenDistribution(float _a, float _b);
     double even();
     bool liftTourist(double step);
+    int getMaxQueueLen();
 
 private:
     std::default_random_engine *gnt;
@@ -23,6 +24,7 @@ private:
     bool busy;
 
     void queueTourist();
+    void updateMaxQueueLen();
 };
 
 #endif // OPERATOR_H

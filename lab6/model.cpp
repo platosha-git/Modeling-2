@@ -58,6 +58,7 @@ Result Model::generate(const int numTourists, double step)
     res.FTransf = fullTransf;
     res.HTransf = halfTransf;
     res.LMaxLen = getLowMaxLen();
+    res.HMaxLen = getHighMaxLen();
 
     return res;
 }
@@ -78,4 +79,24 @@ int Model::highTransfer(const double step)
         numTransferred += highLifts[i].liftTourist(step);
     }
     return numTransferred;
+}
+
+vector<int> Model::getLowMaxLen()
+{
+    vector<int> maxLens(0);
+    for (auto op : lowLifts) {
+        int curMax = op.getMaxQueueLen();
+        maxLens.push_back(curMax);
+    }
+    return maxLens;
+}
+
+vector<int> Model::getHighMaxLen()
+{
+    vector<int> maxLens(0);
+    for (auto hlift : highLifts) {
+        int curMax = hlift.getMaxQueueLen();
+        maxLens.push_back(curMax);
+    }
+    return maxLens;
 }

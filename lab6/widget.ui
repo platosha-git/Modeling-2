@@ -109,7 +109,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="linePerRefused"/>
+       <widget class="QLineEdit" name="lineMaxLen1"/>
       </item>
      </layout>
     </widget>
@@ -131,7 +131,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="linePerRefused_2"/>
+       <widget class="QLineEdit" name="lineMaxLen2"/>
       </item>
      </layout>
     </widget>

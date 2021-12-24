@@ -30,4 +30,16 @@ void Widget::on_pushButton_clicked()
 
     ui->lineFullTransf->setText(QString::number(res.FTransf));
     ui->lineHalfTransf->setText(QString::number(res.HTransf));
+
+    QString str1 = "";
+    for (auto len : res.LMaxLen) {
+        str1 += QString::number(len) + " ";
+    }
+    ui->lineMaxLen1->setText(str1);
+
+    QString str2 = "";
+    for (auto len : res.HMaxLen) {
+        str2 += QString::number(len) + " ";
+    }
+    ui->lineMaxLen2->setText(str2);
 }

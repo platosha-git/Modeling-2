@@ -4,7 +4,7 @@ using namespace std;
 
 Computer::Computer(default_random_engine *re, vector<int> *_queue) :
     gnt(re),
-    queue(_queue), maxLen(0),
+    queue(_queue), maxQueueLen(0),
     timer(0),
     a(0), b(0),
     busy(false)
@@ -29,17 +29,14 @@ bool Computer::liftTourist(double dt)
 {
     timer -= dt;
 
-    int curLen = queue->size();
-    if (curLen > maxLen) {
-        maxLen = curLen;
-    }
+    updateMaxQueueLen();
 
     if (busy && timer <= 0) {
         busy = false;
         return true;
     }
 
-    if (!busy && curLen != 0) {
+    if (!busy && queue->size() != 0) {
         (*queue).erase((*queue).begin());
         timer = even();
         busy = true;
@@ -47,4 +44,16 @@ bool Computer::liftTourist(double dt)
     }
 
     return false;
+}
+
+void Computer::updateMaxQueueLen()
+{
+    if (static_cast<int>(queue->size()) > maxQueueLen) {
+        maxQueueLen = queue->size();
+    }
+}
+
+int Computer::getMaxQueueLen()
+{
+    return maxQueueLen;
 }

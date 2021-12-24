@@ -30,6 +30,9 @@ private:
 
     int lowTransfer(const double step);
     int highTransfer(const double step);
+
+    std::vector<int> getLowMaxLen();
+    std::vector<int> getHighMaxLen();
 };
 
 #endif // MODEL_H

@@ -12,14 +12,17 @@ public:
     void setEvenDistribution(const float _a, const float _b);
     double even();
     bool liftTourist(double dt);
+    int getMaxQueueLen();
 
 private:
     std::default_random_engine *gnt;
     std::vector<int> *queue;
-    int maxLen = 0;
+    int maxQueueLen = 0;
     double timer;
     float a, b;
     bool busy;
+
+    void updateMaxQueueLen();
 };
 
 #endif // COMPUTER_H

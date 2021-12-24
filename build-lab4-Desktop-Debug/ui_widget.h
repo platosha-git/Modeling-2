@@ -38,7 +38,11 @@ public:
     QWidget *horizontalLayoutWidget_6;
     QHBoxLayout *horizontalLayout_6;
     QLabel *labelA_5;
-    QLineEdit *linePerRefused;
+    QLineEdit *lineMaxLen1;
+    QWidget *horizontalLayoutWidget_7;
+    QHBoxLayout *horizontalLayout_7;
+    QLabel *labelA_6;
+    QLineEdit *lineMaxLen2;
     QFrame *line_2;
     QWidget *horizontalLayoutWidget_8;
     QHBoxLayout *horizontalLayout_8;
@@ -54,10 +58,10 @@ public:
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QString::fromUtf8("Widget"));
-        Widget->resize(451, 417);
+        Widget->resize(451, 470);
         widget = new QWidget(Widget);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 10, 431, 401));
+        widget->setGeometry(QRect(10, 10, 431, 451));
         line = new QFrame(widget);
         line->setObjectName(QString::fromUtf8("line"));
         line->setGeometry(QRect(0, 180, 441, 20));
@@ -65,7 +69,7 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         groupBox_3 = new QGroupBox(widget);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(10, 210, 301, 181));
+        groupBox_3->setGeometry(QRect(10, 210, 301, 231));
         horizontalLayoutWidget_4 = new QWidget(groupBox_3);
         horizontalLayoutWidget_4->setObjectName(QString::fromUtf8("horizontalLayoutWidget_4"));
         horizontalLayoutWidget_4->setGeometry(QRect(10, 30, 281, 41));
@@ -109,10 +113,26 @@ public:
 
         horizontalLayout_6->addWidget(labelA_5);
 
-        linePerRefused = new QLineEdit(horizontalLayoutWidget_6);
-        linePerRefused->setObjectName(QString::fromUtf8("linePerRefused"));
+        lineMaxLen1 = new QLineEdit(horizontalLayoutWidget_6);
+        lineMaxLen1->setObjectName(QString::fromUtf8("lineMaxLen1"));
 
-        horizontalLayout_6->addWidget(linePerRefused);
+        horizontalLayout_6->addWidget(lineMaxLen1);
+
+        horizontalLayoutWidget_7 = new QWidget(groupBox_3);
+        horizontalLayoutWidget_7->setObjectName(QString::fromUtf8("horizontalLayoutWidget_7"));
+        horizontalLayoutWidget_7->setGeometry(QRect(10, 180, 281, 41));
+        horizontalLayout_7 = new QHBoxLayout(horizontalLayoutWidget_7);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
+        labelA_6 = new QLabel(horizontalLayoutWidget_7);
+        labelA_6->setObjectName(QString::fromUtf8("labelA_6"));
+
+        horizontalLayout_7->addWidget(labelA_6);
+
+        lineMaxLen2 = new QLineEdit(horizontalLayoutWidget_7);
+        lineMaxLen2->setObjectName(QString::fromUtf8("lineMaxLen2"));
+
+        horizontalLayout_7->addWidget(lineMaxLen2);
 
         line_2 = new QFrame(widget);
         line_2->setObjectName(QString::fromUtf8("line_2"));
@@ -166,7 +186,8 @@ public:
         groupBox_3->setTitle(QApplication::translate("Widget", "Results", nullptr));
         labelA_3->setText(QApplication::translate("Widget", "Full transferred clients:", nullptr));
         labelA_4->setText(QApplication::translate("Widget", "Half transferred clients:", nullptr));
-        labelA_5->setText(QApplication::translate("Widget", "Refuses percentage:", nullptr));
+        labelA_5->setText(QApplication::translate("Widget", "Max queue length in S1:", nullptr));
+        labelA_6->setText(QApplication::translate("Widget", "Max queue length in S2:", nullptr));
         labelA_7->setText(QApplication::translate("Widget", "Number of tourists:", nullptr));
         pushButton->setText(QApplication::translate("Widget", "Generate", nullptr));
         labelA_8->setText(QApplication::translate("Widget", "Unit of time:", nullptr));
